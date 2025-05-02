@@ -1,0 +1,45 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# PHP
+vendor/
+composer.lock
+
+# SASS
+.sass-cache/
+
+# IDEs
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Archivos temporales de sistemas operativos
+.DS_Store
+Thumbs.db
+
+# Entorno de desarrollo
+.env
+.env.local
+.env.*.local
+
+# Archivos de compilación
+*.log
+*.tmp
+
+# Directorios generados por compiladores/transpiladores
+/dist/
+/build/
+
+# Archivos de configuración de IDE o editor de texto
+*.iml
+
+# Archivos de base de datos locales o backups
+*.sqlite
+*.db
+
+# Otros archivos específicos
+*.bak
+*.swp
