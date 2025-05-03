@@ -8,4 +8,6 @@ router.post('/register', authController.register);
 // Ruta para login de usuario
 router.post('/login', authController.login);
 
+// Ruta para validar el token de usuario
+router.get('/validate', authController.validateToken);
 module.exports = router;

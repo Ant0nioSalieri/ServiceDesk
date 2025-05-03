@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
         { expiresIn: '1h' }
       );
   
-      res.json({ msg: 'Login exitoso', token, usuario: { id: user.id_usuario, tipo: user.tipo_usuario } });
+      res.json({ msg: 'Login exitoso', token, usuario: { id: user.id_usuario, tipo: user.tipo_usuario, email: user.email_usuario  } });
     } catch (error) {
       console.error("Error en login:", error); // Agregar detalles del error
       res.status(500).json({ msg: 'Error en el servidor', error: error.message });
@@ -57,3 +57,19 @@ exports.login = async (req, res) => {
       res.status(500).json({ msg: 'Error en el servidor', error: error.message });
     }
   };
+
+
+  // Middleware para validar el token
+  exports.validateToken = (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1]; // Obtener el token del encabezado
+    if (!token) {
+        return res.status(401).json({ valid: false, msg: 'Token no proporcionado' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.json({ valid: true, usuario: decoded });
+    } catch (error) {
+        res.status(401).json({ valid: false, msg: 'Token inválido' });
+    }
+};
