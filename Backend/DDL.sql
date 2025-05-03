@@ -4,8 +4,8 @@ CREATE TABLE usuarios (
     id_usuario BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nom_usuario VARCHAR(50) NOT NULL,
     ape_usuario VARCHAR(50) NOT NULL,
-    email_usuario VARCHAR(50) NOT NULL,
-    pass_usuario VARCHAR(50) NOT NULL,
+    email_usuario VARCHAR(150) NOT NULL,
+    pass_usuario VARCHAR(60) NOT NULL,
     tipo_usuario VARCHAR(20) CHECK (tipo_usuario IN ('usuario', 'agente'))
 );
 

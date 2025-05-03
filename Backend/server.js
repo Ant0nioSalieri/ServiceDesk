@@ -1,29 +1,27 @@
-require('dotenv').config(); // Cargar las variables de entorno desde .env
 const express = require('express');
-const sequelize = require('./config');
-const Usuario = require('./models/Usuario');
-const Sla = require('./models/Sla');
-const Articulo = require('./models/Articulo');
-const Activo = require('./models/Activo');
-const Cambio = require('./models/Cambio');
-const Ticket = require('./models/Ticket');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const sequelize = require('./config/database'); // Importar la configuración de la base de datos
+const authRoutes = require('./routes/authRoutes'); // Importar las rutas de autenticación
 
+dotenv.config();
 const app = express();
 
-// Configurar middlewares y rutas (si es necesario)
-app.use(express.json());
+app.use(cors());
+app.use(express.json()); // Para parsear JSON en las peticiones
 
-// Sincronizar los modelos con la base de datos
-sequelize.sync({ force: false }) // force: false evita eliminar tablas existentes
-    .then(() => {
-        console.log("Tablas sincronizadas correctamente");
-    })
-    .catch((err) => {
-        console.error("Error sincronizando las tablas:", err);
+// Rutas
+app.use('/api/auth', authRoutes); // Usar las rutas de autenticación
+
+// Conectar a la base de datos y luego iniciar el servidor
+sequelize.authenticate()
+  .then(() => {
+    console.log('Conectado a PostgreSQL');
+    return sequelize.sync(); // Sincroniza los modelos con la base de datos
+  })
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`Servidor corriendo en puerto ${process.env.PORT}`);
     });
-
-// Iniciar el servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor en funcionamiento en el puerto ${PORT}`);
-});
+  })
+  .catch(err => console.error('Error en la conexión:', err));
