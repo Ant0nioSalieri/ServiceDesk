@@ -16,10 +16,20 @@ CREATE TABLE sla (
     tiempo_sla INT
 );
 
+CREATE TABLE categorias (
+    id_categoria BIGINT PRIMARY KEY AUTO_INCREMENT, 
+    nom_categoria VARCHAR(100) NOT NULL,            
+    id_padre BIGINT NULL,                           
+    FOREIGN KEY (id_padre) REFERENCES categorias(id_categoria) ON DELETE CASCADE, 
+    descripcion TEXT NULL                           
+);
+
 CREATE TABLE servicios (
     id_servicio BIGINT PRIMARY KEY,
     nom_servicio VARCHAR(100),
     desc_servicio TEXT,
+    id_categoria BIGINT NULL,
+    CONSTRAINT fk_servicio_categoria FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
 );
 
 
@@ -82,14 +92,25 @@ CREATE TABLE tickets (
 );
 
 
+
+
 --Inserts
-INSERT INTO servicios (nom_servicio, desc_servicio) VALUES
-('SAP', 'Gestión de recursos empresariales'),
-('Educandus', 'Plataforma de aprendizaje'),
-('Sistema de Biblioteca', 'Gestión de préstamos y recursos'),
-('Talana RRHH', 'Gestión de recursos humanos'),
-('Microsoft 365', 'Office, OneDrive y Correo'),
-('Soporte de hardware', 'Computadoras, impresoras, proyectores, etc.');
+-- Insertar servicios faltantes con sus categorías
+INSERT INTO servicios (nom_servicio, desc_servicio, id_categoria) VALUES
+('SAP', 'Gestión de recursos empresariales', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Sistemas de TI')),
+('Educandus', 'Plataforma de aprendizaje', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Sistemas de TI')),
+('Sistema de Biblioteca', 'Gestión de préstamos y recursos', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Sistemas de TI')),
+('Talana RRHH', 'Gestión de recursos humanos', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Sistemas de TI')),
+('Microsoft 365', 'Office, OneDrive y Correo', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Sistemas de TI')),
+('Computadoras', 'Soporte para computadoras', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Soporte de Hardware y Dispositivos')),
+('Impresoras', 'Soporte para impresoras', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Soporte de Hardware y Dispositivos')),
+('Proyectores', 'Soporte para proyectores', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Soporte de Hardware y Dispositivos')),
+('Televisores', 'Soporte para televisores', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Soporte de Hardware y Dispositivos')),
+('Access Point (WiFi)', 'Soporte para puntos de acceso WiFi', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Soporte de Hardware y Dispositivos')),
+('Biométricos de asistencia', 'Soporte para dispositivos biométricos', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Soporte de Hardware y Dispositivos')),
+('Internet', 'Soporte para conexión a Internet', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Soporte de Hardware y Dispositivos'));
+
+
 
 INSERT INTO sla (id_sla, nom_sla, tiempo_sla) VALUES
 (1, 'SLA Incidente', 8),

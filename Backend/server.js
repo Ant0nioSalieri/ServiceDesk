@@ -5,7 +5,8 @@ const sequelize = require('./config/database'); // Importar la configuración de
 const authRoutes = require('./routes/authRoutes'); // Importar las rutas de autenticación
 const serviceRoutes = require('./routes/serviceRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
-
+const categoryRoutes = require('./routes/categoryRoutes');
+require('./models/associations');
 
 dotenv.config();
 const app = express();
@@ -17,12 +18,13 @@ app.use(express.json()); // Para parsear JSON en las peticiones
 app.use('/api/auth', authRoutes); // Usar las rutas de autenticación
 app.use('/api/services', serviceRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // Conectar a la base de datos y luego iniciar el servidor
 sequelize.authenticate()
   .then(() => {
     console.log('Conectado a PostgreSQL');
-    return sequelize.sync(); // Sincroniza los modelos con la base de datos
+    return sequelize.sync( {force: false} ); // Sincroniza los modelos con la base de datos
   })
   .then(() => {
     app.listen(process.env.PORT, () => {

@@ -1,22 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const Ticket = require('../models/Ticket');
+const moment = require('moment'); //con moment podemos convertir la fecha al formato local
 
 // Endpoint para crear un ticket
 router.post('/create', async (req, res) => {
     try {
-        const { usuario_id, servicio_id, descripcion } = req.body;
+        const { usuario_id, categoria_id, servicio_id, descripcion, tipo_ticket, sla_id } = req.body;
+
+        // Validar los datos
+        if (!usuario_id || !categoria_id || !servicio_id || !descripcion || !tipo_ticket || !sla_id) {
+            return res.status(400).json({ success: false, msg: 'Todos los campos son obligatorios.' });
+        }
 
         // Crear el ticket
         const nuevoTicket = await Ticket.create({
-            tipo_ticket: 'solicitud', // Por defecto, puedes cambiarlo según el tipo
+            tipo_ticket,
             titulo_ticket: `Ticket para servicio ${servicio_id}`,
             desc_ticket: descripcion,
             fe_ini_ticket: new Date(),
             estado_ticket: 'abierto',
             id_usuario: usuario_id,
-            id_sla: servicio_id === 1 ? 1 : 2, // Ejemplo: SLA según el servicio
-            fe_lim_ticket: new Date(Date.now() + (servicio_id === 1 ? 8 : 24) * 60 * 60 * 1000), // SLA en horas
+            id_categoria: categoria_id,
+            id_servicio: servicio_id,
+            id_sla: sla_id,
+            fe_lim_ticket: new Date(Date.now() + (sla_id === 1 ? 8 : 24) * 60 * 60 * 1000), // SLA en horas
             cump_sla: false,
         });
 
@@ -35,7 +43,15 @@ router.get('/user/:id', async (req, res) => {
         // Obtener tickets del usuario
         const tickets = await Ticket.findAll({ where: { id_usuario: id } });
 
-        res.json(tickets);
+        // Ajustar las fechas al formato local
+        const ticketsConFechasLocales = tickets.map(ticket => ({
+            ...ticket.toJSON(),
+            fe_ini_ticket: moment(ticket.fe_ini_ticket).utcOffset('-04:00').format('YYYY-MM-DD HH:mm:ss'),
+            fe_lim_ticket: moment(ticket.fe_lim_ticket).utcOffset('-04:00').format('YYYY-MM-DD HH:mm:ss'),
+        }));
+
+        res.json(ticketsConFechasLocales);
+
     } catch (error) {
         console.error('Error al obtener los tickets del usuario:', error);
         res.status(500).json({ success: false, msg: 'Error al obtener los tickets' });
@@ -91,7 +107,15 @@ router.get('/agent/:id', async (req, res) => {
             return res.status(404).json({ msg: 'No tienes tickets asignados.' });
         }
 
-        res.json(tickets);
+        // Ajustar las fechas al formato local
+        const ticketsConFechasLocales = tickets.map(ticket => ({
+            ...ticket.toJSON(),
+            fe_ini_ticket: moment(ticket.fe_ini_ticket).utcOffset('-04:00').format('YYYY-MM-DD HH:mm:ss'),
+            fe_lim_ticket: moment(ticket.fe_lim_ticket).utcOffset('-04:00').format('YYYY-MM-DD HH:mm:ss'),
+        }));
+
+        res.json(ticketsConFechasLocales);
+
     } catch (error) {
         console.error('Error al obtener los tickets asignados:', error);
         res.status(500).json({ msg: 'Error al obtener los tickets asignados.' });

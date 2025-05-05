@@ -20,4 +20,19 @@ router.get('/', async (req, res) => {
     }
 });
 
+
+// Endpoint para obtener servicios por categoría
+router.get('/category/:id', async (req, res) => {
+    try {
+        const servicios = await Servicio.findAll({
+            where: { id_categoria: req.params.id },
+            attributes: ['id_servicio', 'nom_servicio', 'desc_servicio'],
+        });
+
+        res.json(servicios);
+    } catch (error) {
+        console.error('Error al obtener los servicios:', error);
+        res.status(500).json({ msg: 'Error al obtener los servicios' });
+    }
+});
 module.exports = router;

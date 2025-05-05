@@ -1,35 +1,31 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Servicio = sequelize.define('Servicio', {
-    id_servicio: {
+const Categoria = sequelize.define('Categoria', {
+    id_categoria: {
         type: DataTypes.BIGINT,
         primaryKey: true,
         autoIncrement: true,
     },
-    nom_servicio: {
+    nom_categoria: {
         type: DataTypes.STRING(100),
         allowNull: false,
     },
-    desc_servicio: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-    },
-    estado_servicio: {
-        type: DataTypes.ENUM('activo', 'inactivo'),
-        defaultValue: 'activo',
-    },
-    id_categoria: {
+    id_padre: {
         type: DataTypes.BIGINT,
-        allowNull: true,
+        allowNull: true, // NULL si es una categoría principal
         references: {
             model: 'categorias',
             key: 'id_categoria',
         },
     },
+    descripcion: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
 }, {
-    tableName: 'servicios',
+    tableName: 'categorias',
     timestamps: false,
 });
 
-module.exports = Servicio;
+module.exports = Categoria;

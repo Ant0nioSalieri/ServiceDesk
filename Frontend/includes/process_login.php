@@ -33,10 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($response['usuario']['tipo'] === 'agente') {
             header('Location: ../templates/agent/agent_dashboard.php');
         } else {
-            echo 'Error: Tipo de usuario no reconocido.';
+            $_SESSION['error'] = 'Error: Tipo de usuario no reconocido.';
+            header('Location: ../templates/login.php');
         }
     } else {
-        echo 'Error: ' . $response['msg'];
+        // Manejar el caso de usuario no encontrado o error en la autenticación
+        $_SESSION['error'] = $response['msg'] ?? 'Usuario no encontrado o credenciales incorrectas.';
+        header('Location: ../templates/login.php');
     }
 }
 ?>
