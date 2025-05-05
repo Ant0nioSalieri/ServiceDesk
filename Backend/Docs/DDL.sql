@@ -25,13 +25,12 @@ CREATE TABLE categorias (
 );
 
 CREATE TABLE servicios (
-    id_servicio BIGINT PRIMARY KEY,
-    nom_servicio VARCHAR(100),
-    desc_servicio TEXT,
-    id_categoria BIGINT NULL,
+    id_servicio BIGSERIAL PRIMARY KEY, -- Autoincremental
+    nom_servicio VARCHAR(100) NOT NULL, 
+    desc_servicio TEXT, 
+    id_categoria BIGINT, 
     CONSTRAINT fk_servicio_categoria FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON DELETE SET NULL
 );
-
 
 CREATE TABLE articulos (
     id_articulo BIGINT PRIMARY KEY,
@@ -95,7 +94,9 @@ CREATE TABLE tickets (
 
 
 --Inserts
--- Insertar servicios faltantes con sus categorías
+
+-- Insertar servicios con sus categorías
+--DROP TABLE IF EXISTS servicios;
 INSERT INTO servicios (nom_servicio, desc_servicio, id_categoria) VALUES
 ('SAP', 'Gestión de recursos empresariales', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Sistemas de TI')),
 ('Educandus', 'Plataforma de aprendizaje', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Sistemas de TI')),
@@ -109,7 +110,6 @@ INSERT INTO servicios (nom_servicio, desc_servicio, id_categoria) VALUES
 ('Access Point (WiFi)', 'Soporte para puntos de acceso WiFi', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Soporte de Hardware y Dispositivos')),
 ('Biométricos de asistencia', 'Soporte para dispositivos biométricos', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Soporte de Hardware y Dispositivos')),
 ('Internet', 'Soporte para conexión a Internet', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Soporte de Hardware y Dispositivos'));
-
 
 
 INSERT INTO sla (id_sla, nom_sla, tiempo_sla) VALUES
