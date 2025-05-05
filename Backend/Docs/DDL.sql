@@ -17,7 +17,7 @@ CREATE TABLE sla (
 );
 
 CREATE TABLE categorias (
-    id_categoria BIGINT PRIMARY KEY AUTO_INCREMENT, 
+    id_categoria BIGSERIAL PRIMARY KEY, 
     nom_categoria VARCHAR(100) NOT NULL,            
     id_padre BIGINT NULL,                           
     FOREIGN KEY (id_padre) REFERENCES categorias(id_categoria) ON DELETE CASCADE, 
@@ -94,6 +94,24 @@ CREATE TABLE tickets (
 
 
 --Inserts
+
+-- Insertar categorías principales (sin padre)
+INSERT INTO categorias (id_categoria, nom_categoria, id_padre, descripcion) VALUES
+(1, 'Sistemas de TI', NULL, 'Categoría para servicios relacionados con sistemas de TI'),
+(2, 'Soporte de Hardware y Dispositivos', NULL, 'Categoría para soporte de hardware y dispositivos'),
+(3, 'SAP', 1, 'Sistema de gestión empresarial'),
+(4, 'Educandus', 1, 'Plataforma de aprendizaje en línea'),
+(5, 'Sistema de Biblioteca', 1, 'Sistema para la gestión de bibliotecas'),
+(6, 'Talana RRHH', 1, 'Sistema de gestión de recursos humanos'),
+(7, 'Microsoft 365', 1, 'Suite de productividad en la nube'),
+(8, 'Computadoras', 2, 'Soporte para computadoras personales y portátiles'),
+(9, 'Impresoras', 2, 'Soporte para impresoras y multifuncionales'),
+(10, 'Proyectores', 2, 'Soporte para proyectores y pantallas'),
+(11, 'Televisores', 2, 'Soporte para televisores y pantallas grandes'),
+(12, 'Access Point (WiFi)', 2, 'Soporte para puntos de acceso WiFi y redes inalámbricas'),
+(13, 'Biométricos de asistencia', 2, 'Soporte para dispositivos biométricos de asistencia'),
+(14, 'Internet', 2, 'Soporte para conexión a Internet y redes');
+
 
 -- Insertar servicios con sus categorías
 --DROP TABLE IF EXISTS servicios;
