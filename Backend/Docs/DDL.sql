@@ -1,14 +1,13 @@
 --DDL Para la base de datos, esta en postgres
 
 CREATE TABLE usuarios (
-    id_usuario BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGSERIAL NOT NULL PRIMARY KEY,
     nom_usuario VARCHAR(50) NOT NULL,
     ape_usuario VARCHAR(50) NOT NULL,
     email_usuario VARCHAR(150) NOT NULL,
     pass_usuario VARCHAR(60) NOT NULL,
     tipo_usuario VARCHAR(20) CHECK (tipo_usuario IN ('usuario', 'agente'))
 );
-
 
 CREATE TABLE sla (
     id_sla BIGINT PRIMARY KEY,
@@ -113,7 +112,7 @@ INSERT INTO categorias (id_categoria, nom_categoria, id_padre, descripcion) VALU
 (14, 'Internet', 2, 'Soporte para conexión a Internet y redes');
 
 
--- Insertar servicios con sus categorías
+--Insertar servicios con sus categorías
 --DROP TABLE IF EXISTS servicios;
 INSERT INTO servicios (nom_servicio, desc_servicio, id_categoria) VALUES
 ('SAP', 'Gestión de recursos empresariales', (SELECT id_categoria FROM categorias WHERE nom_categoria = 'Sistemas de TI')),
