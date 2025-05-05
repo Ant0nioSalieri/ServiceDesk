@@ -16,6 +16,12 @@ CREATE TABLE sla (
     tiempo_sla INT
 );
 
+CREATE TABLE servicios (
+    id_servicio BIGINT PRIMARY KEY,
+    nom_servicio VARCHAR(100),
+    desc_servicio TEXT,
+);
+
 
 CREATE TABLE articulos (
     id_articulo BIGINT PRIMARY KEY,
@@ -74,3 +80,17 @@ CREATE TABLE tickets (
     CONSTRAINT fk_articulo_ticket FOREIGN KEY (id_articulo) REFERENCES articulos(id_articulo),
     CONSTRAINT fk_sla_ticket FOREIGN KEY (id_sla) REFERENCES sla(id_sla)
 );
+
+
+--Inserts
+INSERT INTO servicios (nom_servicio, desc_servicio) VALUES
+('SAP', 'Gestión de recursos empresariales'),
+('Educandus', 'Plataforma de aprendizaje'),
+('Sistema de Biblioteca', 'Gestión de préstamos y recursos'),
+('Talana RRHH', 'Gestión de recursos humanos'),
+('Microsoft 365', 'Office, OneDrive y Correo'),
+('Soporte de hardware', 'Computadoras, impresoras, proyectores, etc.');
+
+INSERT INTO sla (id_sla, nom_sla, tiempo_sla) VALUES
+(1, 'SLA Incidente', 8),
+(2, 'SLA Requerimiento', 24);

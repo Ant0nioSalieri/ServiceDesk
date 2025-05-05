@@ -26,7 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($response['token'])) {
         $_SESSION['token'] = $response['token'];
         $_SESSION['usuario'] = $response['usuario'];
-        header('Location: ../templates/home.php'); // Redirigir al home
+
+        // Redirigir según el tipo de usuario
+        if ($response['usuario']['tipo'] === 'usuario') {
+            header('Location: ../templates/user/user_dashboard.php');
+        } elseif ($response['usuario']['tipo'] === 'agente') {
+            header('Location: ../templates/agent/agent_dashboard.php');
+        } else {
+            echo 'Error: Tipo de usuario no reconocido.';
+        }
     } else {
         echo 'Error: ' . $response['msg'];
     }

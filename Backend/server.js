@@ -3,6 +3,9 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const sequelize = require('./config/database'); // Importar la configuración de la base de datos
 const authRoutes = require('./routes/authRoutes'); // Importar las rutas de autenticación
+const serviceRoutes = require('./routes/serviceRoutes');
+const ticketRoutes = require('./routes/ticketRoutes');
+
 
 dotenv.config();
 const app = express();
@@ -12,6 +15,8 @@ app.use(express.json()); // Para parsear JSON en las peticiones
 
 // Rutas
 app.use('/api/auth', authRoutes); // Usar las rutas de autenticación
+app.use('/api/services', serviceRoutes);
+app.use('/api/tickets', ticketRoutes);
 
 // Conectar a la base de datos y luego iniciar el servidor
 sequelize.authenticate()
