@@ -20,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     $context  = stream_context_create($options);
-    $result = file_get_contents($url, false, $context);
-    $response = json_decode($result, true);
+    $result = @file_get_contents($url, false, $context);
+    $response = $result ? json_decode($result, true) : null;
 
     if (isset($response['token'])) {
         $_SESSION['token'] = $response['token'];
@@ -37,8 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: ../templates/login.php');
         }
     } else {
-        // Manejar el caso de usuario no encontrado o error en la autenticación
-        $_SESSION['error'] = $response['msg'] ?? 'Usuario no encontrado o credenciales incorrectas.';
+        // Manejar el caso de usuario no encontrado o credenciales incorrectas
+        if ($response && isset($response['msg'])) {
+            $_SESSION['error'] = $response['msg']; // Mensaje del backend
+        } else {
+            $_SESSION['error'] = 'Usuario no encontrado o credenciales incorrectas.';
+        }
         header('Location: ../templates/login.php');
     }
 }
