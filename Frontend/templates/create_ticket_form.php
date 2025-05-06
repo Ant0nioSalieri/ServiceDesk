@@ -94,7 +94,11 @@ unset($_SESSION['error']); // Limpiar el error después de mostrarlo
 
         <button type="submit">Crear Ticket</button>
     </form>
-
+    
+    <br><br>
+    <a href="javascript:history.back()">
+        <button type="button">Volver</button>
+    </a>
     
 </body>
 </html>

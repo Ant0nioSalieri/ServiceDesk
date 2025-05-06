@@ -83,6 +83,8 @@ include '../../includes/session_validation.php'; // Validar sesión
                             <td>" . (isset($ticket['estado_ticket']) ? $ticket['estado_ticket'] : 'Sin estado') . "</td>
                             <td>" . (isset($ticket['fe_ini_ticket']) ? $ticket['fe_ini_ticket'] : 'Sin Fecha') . "</td>
                             
+                            
+                            
                         </tr>";
                     }
                 } else {
@@ -137,5 +139,34 @@ include '../../includes/session_validation.php'; // Validar sesión
     </table>
 
     <a href="../logout.php">Cerrar sesión</a>
+
+    <script>
+        async function finalizarTicket(ticketId, button) {
+            if (!confirm('¿Estás seguro de que deseas finalizar este ticket?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`../../includes/finalize_ticket.php?ticket_id=${ticketId}`, {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Eliminar la fila de la tabla
+                    const row = button.closest('tr');
+                    row.remove();
+                    alert('El ticket se finalizó correctamente.');
+                } else {
+                    alert(result.msg || 'No se pudo finalizar el ticket.');
+                }
+            } catch (error) {
+                console.error('Error al finalizar el ticket:', error);
+                alert('Ocurrió un error al intentar finalizar el ticket.');
+            }
+        }
+    </script>    
+
 </body>
 </html>

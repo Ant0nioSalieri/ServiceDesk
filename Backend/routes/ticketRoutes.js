@@ -98,10 +98,16 @@ router.get('/agent/:id', async (req, res) => {
     try {
         const { id } = req.params;
 
+        console.log('ID del agente:', id);
+
         // Obtener los tickets asignados al agente
         const tickets = await Ticket.findAll({
-            where: { id_agente: id },
+            where: {
+                id_agente: id,
+            }
         });
+
+        console.log('Tickets encontrados:', tickets);
 
         if (!tickets || tickets.length === 0) {
             return res.status(404).json({ msg: 'No tienes tickets asignados.' });
@@ -110,8 +116,12 @@ router.get('/agent/:id', async (req, res) => {
         // Ajustar las fechas al formato local
         const ticketsConFechasLocales = tickets.map(ticket => ({
             ...ticket.toJSON(),
-            fe_ini_ticket: moment(ticket.fe_ini_ticket).utcOffset('-04:00').format('YYYY-MM-DD HH:mm:ss'),
-            fe_lim_ticket: moment(ticket.fe_lim_ticket).utcOffset('-04:00').format('YYYY-MM-DD HH:mm:ss'),
+            fe_ini_ticket: ticket.fe_ini_ticket
+                ? moment(ticket.fe_ini_ticket).utcOffset('-04:00').format('YYYY-MM-DD HH:mm:ss')
+                : null,
+            fe_lim_ticket: ticket.fe_lim_ticket
+                ? moment(ticket.fe_lim_ticket).utcOffset('-04:00').format('YYYY-MM-DD HH:mm:ss')
+                : null,
         }));
 
         res.json(ticketsConFechasLocales);
@@ -122,6 +132,28 @@ router.get('/agent/:id', async (req, res) => {
     }
 });
 
+//Endpoint para finalizar un ticket
+router.post('/finalize/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Buscar el ticket por ID
+        const ticket = await Ticket.findByPk(id);
+        if (!ticket) {
+            return res.status(404).json({ success: false, msg: 'Ticket no encontrado.' });
+        }
+
+        // Actualizar el estado del ticket a "finalizado"
+        ticket.estado_ticket = 'finalizado';
+        ticket.fe_fin_ticket = new Date();
+        await ticket.save();
+
+        res.json({ success: true, msg: 'Ticket finalizado correctamente.' });
+    } catch (error) {
+        console.error('Error al finalizar el ticket:', error);
+        res.status(500).json({ success: false, msg: 'Error al finalizar el ticket.' });
+    }
+});
 
 
 module.exports = router;
