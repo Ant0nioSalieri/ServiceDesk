@@ -22,13 +22,16 @@ include '../../includes/session_validation.php'; // Validar sesión
 
     </nav>
     
-    <main class="main-content">
-    
     <header>
     <a href="../create_ticket_form.php">
         <button>+</button>
     </a>
     </header>
+
+    <main class="main-content">
+    
+    
+    
     
     <h1>Bienvenido, <?php echo isset($_SESSION['usuario']['email']) ? $_SESSION['usuario']['email'] : 'Invitado'; ?></h1>
 
