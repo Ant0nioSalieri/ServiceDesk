@@ -15,21 +15,24 @@ unset($_SESSION['error']); // Limpiar el mensaje de error después de mostrarlo
 </head>
 
 <body>
-    <div class="contenedor iniciar-sesion">
-        <h1>Iniciar Sesión</h1>
-        <?php if ($error): ?>
-            <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
-        <form action="../includes/process_login.php" method="POST">
-            <label for="email">Correo Electrónico:</label>
+    <div class="contenedor">
+
+        <form class="caja-login" action="../includes/process_login.php" method="POST">
+            <h1>Iniciar Sesión</h1>
+            <label for="email">Correo Electrónico</label>
             <input type="email" id="email" name="email_usuario" required>
             <br>
-            <label for="password">Contraseña:</label>
+            <label for="password">Contraseña</label>
             <input type="password" id="password" name="pass_usuario" required>
             <br>
             <button type="submit">Iniciar Sesión</button>
+            <?php if ($error): ?>
+                <p class="error"><?php echo htmlspecialchars($error); ?></p>
+            <?php endif; ?>
         </form>
+
     </div>
+
 
 </body>
 

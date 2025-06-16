@@ -1,0 +1,107 @@
+// Estilos para la página de login
+
+// Importar variables y mixins
+@import '../base/variables';
+@import '../base/globales';
+
+body {
+    background-color: $background-color;
+    background: $background-color-gradient-azul;
+}
+
+// Contenedor principal del login
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+
+// Caja del formulario de login
+.caja-login {
+  background: $blanco;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+// Título del formulario
+.caja-login h1 {
+  
+  color: $primario;
+}
+
+.caja-login label {
+    display: flex;
+    justify-content: left;
+    font-weight: $bold;
+    color: $grisOscuro;
+}
+// Estilos para el formulario
+.caja-login form {
+  display: flex;
+  flex-direction: column;
+}
+
+// Estilos para los inputs
+.caja-login input[type="email"],
+.caja-login input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid $grisOscuro;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.caja-login input[type="email"]:focus,
+.caja-login input[type="password"]:focus {
+  outline: none;
+  border-color: $primario;
+  box-shadow: 0 0 5px rgba($primario, 0.5);
+}
+
+// Botón de login
+.caja-login button {
+  padding: 0.75rem;
+  background-color: $primario;
+  color: $blanco;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.caja-login button:hover {
+  background-color: darken($primario, 10%);
+}
+
+// Enlace para recuperar contraseña
+.caja-login a {
+  display: block;
+  margin-top: 1rem;
+  color: $verde;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.caja-login a:hover {
+  text-decoration: underline;
+}
+
+.error {
+    
+    background-color: $rojo;
+    color: $blanco;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+}

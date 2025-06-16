@@ -12,11 +12,19 @@ $desktop: 1024px;
 $negro: #000000;
 $amarillo: #E08709;;
 $verde: #71B100;
+$rojo: #FF0000;
 $blanco: #FFFFFF;
 $gris: #e1e1e1;
 $grisOscuro: #333333;
+$primario: #133aa5;
+$background-color: #F5F5F5;
 
+
+// Gradientes
+$background-color-gradient: linear-gradient(180deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+$background-color-gradient-azul: linear-gradient(360deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
 $separacion: 5rem;
+
 
 // Fuentes
 
