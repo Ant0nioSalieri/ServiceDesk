@@ -10,12 +10,27 @@ include '../../includes/session_validation.php'; // Validar sesión
     <link rel="stylesheet" href="../assets/css/app.css">
     <title>Panel de Usuario</title>
 </head>
-<body>
-    <h1>Bienvenido, <?php echo isset($_SESSION['usuario']['email']) ? $_SESSION['usuario']['email'] : 'Invitado'; ?></h1>
-    <h2>Crear Ticket</h2>
+<body class="dashboard">
+    <nav class="navbar">
+        <nav>
+            <ul>
+                <li><a href="../agent/agent_dashboard.php">Inicio</a></li>
+                <li><a href="../create_ticket_form.php">Crear Ticket</a></li>
+                <li><a href="../logout.php">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+
+    </nav>
+
+    <header>
     <a href="../create_ticket_form.php">
         <button>Ir a Crear Ticket</button>
     </a>
+    </header>
+
+    <main class="main-content">
+        <h1>Bienvenido, <?php echo isset($_SESSION['usuario']['email']) ? $_SESSION['usuario']['email'] : 'Invitado'; ?></h1>
+    
 
     <h2>Mis Tickets</h2>
     <table border="1">
@@ -58,5 +73,7 @@ include '../../includes/session_validation.php'; // Validar sesión
     </table>
 
     <a href="../logout.php">Cerrar sesión</a>
+    </main>
+    
 </body>
 </html>

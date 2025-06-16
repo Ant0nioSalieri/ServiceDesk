@@ -14,7 +14,7 @@ unset($_SESSION['error']); // Limpiar el mensaje de error después de mostrarlo
     <title>Login</title>
 </head>
 
-<body>
+<body class="login">
     <div class="contenedor">
 
         <form class="caja-login" action="../includes/process_login.php" method="POST">

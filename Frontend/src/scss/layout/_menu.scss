@@ -1,0 +1,63 @@
+// Contenedor principal con barra lateral
+.dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+// Barra de navegación lateral
+.navbar {
+  width: 20rem;
+  background-color: $primario;
+  color: $blanco;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+// Logo o encabezado de la barra
+.navbar h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: $blanco;
+}
+
+// Lista de opciones del menú
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.navbar ul li {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.navbar ul li a {
+  color: $blanco;
+  text-decoration: none;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+  background-color: darken($primario, 10%);
+}
+
+// Contenido principal
+.main-content {
+  margin-left: 250px; // Espacio para la barra lateral
+  padding: 2rem;
+  width: calc(100% - 250px);
+}

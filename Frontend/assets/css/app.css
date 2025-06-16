@@ -120,7 +120,7 @@ h4 {
   font-size: 2.6rem;
 }
 
-body {
+.login {
   background-color: #F5F5F5;
   background: linear-gradient(360deg, rgb(2, 0, 36) 0%, rgb(9, 9, 121) 35%, rgb(0, 212, 255) 100%);
 }
@@ -210,6 +210,69 @@ body {
   margin-top: 1rem;
   font-size: 1.2rem;
   text-align: center;
+}
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+.navbar {
+  width: 20rem;
+  background-color: #133aa5;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #FFFFFF;
+}
+
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.navbar ul li {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.navbar ul li a {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+  background-color: rgb(13.7336956522, 41.9239130435, 119.2663043478);
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 2rem;
+  width: calc(100% - 250px);
+}
+
+header {
+  border: 1px;
 }
 
 /*# sourceMappingURL=app.css.map */

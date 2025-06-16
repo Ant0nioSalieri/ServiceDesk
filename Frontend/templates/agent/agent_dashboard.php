@@ -7,10 +7,29 @@ include '../../includes/session_validation.php'; // Validar sesión
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../../assets/css/app.css">
     <title>Panel de Agente</title>
 </head>
-<body>
+<body class="dashboard">
+    <nav class="navbar">
+        <nav>
+            <ul>
+                <li><a href="../agent/agent_dashboard.php">Inicio</a></li>
+                <li><a href="../create_ticket_form.php">Crear Ticket</a></li>
+                <li><a href="../logout.php">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+
+    </nav>
+    
+    <main class="main-content">
+    
+    <header>
+    <a href="../create_ticket_form.php">
+        <button>+</button>
+    </a>
+    </header>
+    
     <h1>Bienvenido, <?php echo isset($_SESSION['usuario']['email']) ? $_SESSION['usuario']['email'] : 'Invitado'; ?></h1>
 
     <h2>Crear Ticket</h2>
@@ -168,6 +187,8 @@ include '../../includes/session_validation.php'; // Validar sesión
             }
         }
     </script>    
+    </main>
+   
 
 </body>
 </html>
